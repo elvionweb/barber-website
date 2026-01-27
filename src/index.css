@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto:wght@100..900&family=Bebas+Neue&display=swap');
+
+@import "tailwindcss";
+
+/* Global styles */
+body {
+  @apply bg-black text-white font-sans;
+  
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Tailwind v4 theme tokens */
+@theme {
+  /* Fonts */
+  --font-sans: "Outfit", sans-serif;     /* default UI font */
+  --font-body: "Roboto", sans-serif;     /* paragraphs */
+  --font-display: "Bebas Neue", cursive; /* hero / branding */
+
+  /* Colors */
+  --color-primary: #111111;
+  --color-secondary: #7c5cff;
+  --color-accent: #d4af37;
+}
+
