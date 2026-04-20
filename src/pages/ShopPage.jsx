@@ -13,7 +13,7 @@ const ShopPage = () => {
         const fetchProducts = async () => {
             try {
                 const { data } = await axios.get('/api/products');
-                setProducts(data);
+                setProducts(Array.isArray(data) ? data : []);
             } catch (err) {
                 console.error("Failed to load products");
             }

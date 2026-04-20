@@ -22,7 +22,7 @@ const Testimonials = () => {
         const fetchReviews = async () => {
             try {
                 const { data } = await axios.get('/api/reviews');
-                if (data && data.length > 0) {
+                if (Array.isArray(data) && data.length > 0) {
                     setReviews(data);
                 } else {
                     setReviews(defaultTestimonials);

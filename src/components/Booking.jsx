@@ -45,7 +45,7 @@ const Booking = () => {
         const fetchServices = async () => {
             try {
                 const { data } = await axios.get('/api/services');
-                setServicesList(data);
+                setServicesList(Array.isArray(data) ? data : []);
             } catch (err) {
                 console.error("Failed to load services");
             }
@@ -69,7 +69,7 @@ const Booking = () => {
                 setWaitlistMode(false);
                 try {
                     const { data } = await axios.get(`/api/appointments/slots?date=${selectedDate}&barber=${selectedBarber.name}`);
-                    setAvailableSlots(data);
+                    setAvailableSlots(Array.isArray(data) ? data : []);
                 } catch (err) {
                     console.error("Failed to fetch slots");
                 }

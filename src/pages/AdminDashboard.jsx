@@ -28,13 +28,13 @@ const AdminDashboard = () => {
     }, [user, navigate]);
 
     // Data Fetchers
-    const fetchStats = async () => { try { setStats((await axios.get('/api/admin/stats', config)).data); } catch(err){ console.error('fetchStats error', err); } };
-    const fetchAppointments = async () => { try { setAppointments((await axios.get('/api/appointments', config)).data); } catch(err){ console.error(err); } };
-    const fetchServices = async () => { try { setServices((await axios.get('/api/services')).data); } catch(err){ console.error(err); } };
-    const fetchReviews = async () => { try { setReviews((await axios.get('/api/reviews/all', config)).data); } catch(err){ console.error(err); } };
-    const fetchProducts = async () => { try { setProducts((await axios.get('/api/products')).data); } catch(err){ console.error(err); } };
-    const fetchBarbers = async () => { try { setBarbers((await axios.get('/api/barbers')).data); } catch(err){ console.error(err); } };
-    const fetchGiftCards = async () => { try { setGiftCards((await axios.get('/api/giftcards', config)).data); } catch(err){ console.error(err); } };
+    const fetchStats = async () => { try { const res = await axios.get('/api/admin/stats', config); setStats(typeof res.data === 'object' ? res.data : null); } catch(err){ console.error('fetchStats error', err); } };
+    const fetchAppointments = async () => { try { const res = await axios.get('/api/appointments', config); setAppointments(Array.isArray(res.data) ? res.data : []); } catch(err){ console.error(err); } };
+    const fetchServices = async () => { try { const res = await axios.get('/api/services'); setServices(Array.isArray(res.data) ? res.data : []); } catch(err){ console.error(err); } };
+    const fetchReviews = async () => { try { const res = await axios.get('/api/reviews/all', config); setReviews(Array.isArray(res.data) ? res.data : []); } catch(err){ console.error(err); } };
+    const fetchProducts = async () => { try { const res = await axios.get('/api/products'); setProducts(Array.isArray(res.data) ? res.data : []); } catch(err){ console.error(err); } };
+    const fetchBarbers = async () => { try { const res = await axios.get('/api/barbers'); setBarbers(Array.isArray(res.data) ? res.data : []); } catch(err){ console.error(err); } };
+    const fetchGiftCards = async () => { try { const res = await axios.get('/api/giftcards', config); setGiftCards(Array.isArray(res.data) ? res.data : []); } catch(err){ console.error(err); } };
 
     useEffect(() => {
         if (!user || user.role !== 'admin') return;

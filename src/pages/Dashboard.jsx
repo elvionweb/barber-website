@@ -26,7 +26,7 @@ const Dashboard = () => {
                 headers: { Authorization: `Bearer ${user.token}` }
             };
             const apptsData = await axios.get('/api/appointments/mine', config);
-            setAppointments(apptsData.data);
+            setAppointments(Array.isArray(apptsData.data) ? apptsData.data : []);
 
             const authData = await axios.get('/api/auth/me', config);
             setPoints(authData.data.loyaltyPoints);
