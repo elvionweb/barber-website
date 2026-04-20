@@ -29,7 +29,13 @@ const Services = () => {
             >
               <h3 className="text-xl font-semibold mb-1 md:mb-2">{service.name}</h3>
               <p className="text-accent text-2xl font-bold mb-1 md:mb-2">{service.price}</p>
-              <p className="text-gray-400 text-sm">{service.desc}</p>
+              <p className="text-gray-400 text-sm mb-4">{service.desc}</p>
+              <button 
+                onClick={() => window.location.href = `/?reschedule=false&service=${encodeURIComponent(service.name)}#booking`} 
+                className="mt-auto w-full bg-gray-800 hover:bg-accent hover:text-[#111111] py-2 rounded font-bold text-sm transition-colors"
+               >
+                Book This Service
+              </button>
             </motion.div>
           ))}
         </div>

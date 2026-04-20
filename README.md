@@ -1,106 +1,57 @@
-# EliteCuts Barber Website
+# EliteCuts Fullstack MERN Application
 
-A **modern, responsive, professional barber website** built with **React**, **Tailwind CSS**, and **Framer Motion**, designed for all screen sizes including mobile, tablet, and desktop. This project features smooth scroll navigation, a dynamic gallery with lightbox, appointment booking frontend, testimonials, and full SEO-friendly layout.
+A complete Barber Shop management and booking system built using MongoDB, Express, React, Node.js + Vite. Includes robust logic for managing dynamic un-conflicting bookings, loyalty point accumulation, physical product e-commerce checking out natively to WhatsApp, AI-native localized smart chatbots, SEO structure mappings, comprehensive admin controls, and Node cron job background email tasks.
 
----
+## Setup Instructions
 
-## 🖤 Table of Contents
-
-- [Demo](#-demo)  
-- [Features](#-features)  
-- [Tech Stack](#-tech-stack)  
-- [Folder Structure](#-folder-structure)  
-- [Installation](#-installation)  
-- [Usage](#-usage)  
-- [Screenshots](#-screenshots)  
-- [Contributing](#-contributing)  
-- [License](#-license)  
-
----
-
-## 💻 Demo
-
-> Deployed Version on Verce.  
-> Currently, run locally using the instructions below.
-
----
-
-## ✨ Features
-
-- Fully **responsive design** (mobile-first)  
-- Smooth **scroll-to-section navigation**  
-- Hero section with call-to-action  
-- About section showcasing the barber's story  
-- Services section with **cards and pricing**  
-- Gallery section with **lightbox effect**  
-- Testimonials section for client feedback  
-- Booking form frontend  
-- Sticky, mobile-friendly **navbar**  
-- Footer with social media links and opening hours  
-- SEO-friendly and fast-loading  
-- Clean, component-based React architecture
-
----
-
-## 🛠 Tech Stack
-
-- **Frontend:** React, Tailwind CSS, Framer Motion  
-- **Icons:** React Icons  
-- **Build Tool:** Vite  
-- **Styling:** Tailwind CSS (custom colors and responsive utilities)  
-- **Animations:** Framer Motion for subtle hover/scroll effects  
-
----
-
-## 📁 Folder Structure
-
-barber-website/
-├── src/
-│ ├── assets/ # Images & static files
-│ ├── components/ # Reusable React components
-│ │ ├── Navbar.jsx
-│ │ ├── Hero.jsx
-│ │ ├── About.jsx
-│ │ ├── Services.jsx
-│ │ ├── Gallery.jsx
-│ │ ├── Testimonials.jsx
-│ │ ├── Booking.jsx
-│ │ └── Footer.jsx
-│ ├── pages/
-│ │ └── Home.jsx
-│ ├── App.jsx
-│ └── main.jsx
-├── package.json
-├── tailwind.config.js
-├── postcss.config.js
-└── README.md
-
----
-
-## ⚡ Installation
-
-1. **Clone the repository**
-
+### 1. Backend Server Setup
+From the project root:
 ```bash
-git clone https://github.com/elvionweb/barber-website.git
-cd barber-website
+cd server
+npm install
+```
+Start the backend logic on port 5000:
+```bash
+npm run dev
 ```
 
-## 📝 License
+### 2. Frontend React Client Setup
+Open a new terminal at the project root:
+```bash
+npm install
+npm run dev
+```
 
-This project is **open-source** and free to use.
+### 3. Environment Contexts
+Make sure you establish both `.env` matrices. Defaults are injected via `server/.env` and `src/.env`.
 
----
+**`server/.env` Requirements:**
+- `PORT=5000`
+- `MONGO_URI` (Points optimally to 127.0.0.1 instead of localhost string representation)
+- `JWT_SECRET`
+- `EMAIL_USER` & `EMAIL_PASS` (Requires generating an App Password via Google Security for SMTP logic to run).
+- `CLIENT_URL=http://localhost:5173`
 
-## 👤 Author
+**`src/.env` Requirements:**
+- `VITE_API_URL=http://localhost:5000`
 
-**Elvis Bhafidon** – [https://www.elvionweb.com](https://www.elvionweb.com)  
+## API Endpoints Architecture
 
-Connect with me:  
-- Instagram  
-- Facebook  
-- WhatsApp  
+| Method | Endpoint | Description | Auth Config |
+|--------|----------|-------------|-------------|
+| GET | `/api/appointments/slots` | Time mapping logic weeding out booked elements | Public |
+| GET | `/api/appointments/walkin-status` | Aggregates daily barber constraints | Public |
+| POST | `/api/appointments/waitlist` | Overloads Waitlist collection locally | Public |
+| POST | `/api/appointments` | Executes booking logic and natively sends emails | Public |
+| PUT | `/api/appointments/:id/reschedule` | Modifies existing states and re-verifies collisions | Protected |
+| GET | `/api/admin/stats` | Root KPI mapping logic for BarChart representation | Admin |
+| POST | `/api/chat` | Basic logic mapping AI interactions safely | Public |
+| POST | `/api/loyalty/redeem` | Safe 100 pt deduction logic | Protected |
+| POST | `/api/giftcards/purchase` | Constructs 12-char strings mapped via Mail transporter | Public |
 
-
-
-
+## Admin Interactivity
+A seeder automates DB injection logic. Check `server/index.js` for `seedBarbers` and explicit logic handling. 
+To access `AdminDashboard`:
+1. Use default Admin Credentials generated initially via Seeder endpoints or manually construct standard `User` inputs with `role: admin`.
+2. Login normally mapping `/login`
+3. Navigate to `/admin`.
