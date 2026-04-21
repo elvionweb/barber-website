@@ -117,7 +117,7 @@ const Booking = () => {
         setSubmitting(true);
         setErrorMsg('');
         try {
-                const config = user ? { headers: { Authorization: `Bearer ${user.token}` } } : {};
+            const config = user ? { headers: { Authorization: `Bearer ${user.token}` } } : {};
             if (waitlistMode) {
                 await axios.post('/api/appointments/waitlist', {
                     name: clientName, phone, email, date: selectedDate, service: selectedService._id
@@ -132,11 +132,21 @@ const Booking = () => {
                 const { data } = await axios.post('/api/appointments', {
                     clientName, phone, email, service: selectedService._id, barber: selectedBarber.name, date: selectedDate, timeSlot: selectedTimeSlot, giftCode
                 }, config);
-                setReference(data._id.substring(data._id.length - 8).toUpperCase());
+                setReference(data.data._id.substring(data.data._id.length - 8).toUpperCase());
             }
+
+            // On success, clear standard form state
+            setSelectedService(null);
+            setSelectedBarber(null);
+            setSelectedDate('');
+            setSelectedTimeSlot('');
+            setGiftCode('');
+            setDiscount(0);
+            setGiftCodeValid(false);
+
             setStep(4);
         } catch (err) {
-            setErrorMsg(err.response?.data?.message || 'Failed to complete booking. Slot might be taken.');
+            setErrorMsg(err.response?.data?.message || 'Failed to complete booking. Slot might be taken. Please try again.');
         }
         setSubmitting(false);
     };

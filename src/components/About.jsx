@@ -58,7 +58,14 @@ const About = () => {
         </p>
 
         <button 
-           onClick={() => window.location.href="/#booking"}
+           onClick={() => {
+              const section = document.getElementById('booking');
+              if (section) {
+                  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              } else {
+                  window.location.href = '/#booking';
+              }
+           }}
            className="bg-accent text-[#111111] px-10 py-4 rounded-md font-bold text-lg hover:opacity-90 transition mb-12"
         >
           Book Your Cut

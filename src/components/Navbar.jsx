@@ -2,9 +2,11 @@ import { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import WalkInBadge from "./WalkInBadge";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "../hooks/useAuth";
 
 const Navbar = ({ scrollToSection, refs }) => {
   const [open, setOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   const {
     homeRef,
@@ -66,11 +68,36 @@ const Navbar = ({ scrollToSection, refs }) => {
         <div className="hidden md:flex items-center gap-4">
           <WalkInBadge />
           <button
-            onClick={() => handleScroll(bookingRef)}
+            onClick={() => {
+              const section = document.getElementById('booking');
+              if (section) {
+                  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              } else {
+                  window.location.href = '/#booking';
+              }
+              setOpen(false);
+            }}
             className="bg-accent text-black px-6 py-2 rounded-md font-semibold hover:opacity-90"
           >
             Book Now
           </button>
+
+          {user ? (
+            <div className="relative group cursor-pointer ml-2">
+               <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-accent font-bold uppercase border border-gray-700">
+                  {user.name ? user.name[0] : 'U'}
+               </div>
+               <div className="absolute right-0 mt-2 w-48 bg-[#111111] border border-gray-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto flex flex-col p-2">
+                  <p className="text-gray-300 px-4 py-2 text-sm border-b border-gray-800 overflow-hidden text-ellipsis whitespace-nowrap">{user.name}</p>
+                  <a href="/dashboard" className="text-white hover:text-accent px-4 py-2 text-sm transition mt-1">Dashboard</a>
+                  <button onClick={logout} className="text-left text-red-400 hover:text-red-300 px-4 py-2 text-sm transition">Logout</button>
+               </div>
+            </div>
+          ) : (
+            <a href="/login" className="text-white hover:text-accent font-semibold ml-2 transition">
+               Login
+            </a>
+          )}
         </div>
 
         {/* Mobile Menu Icon */}
@@ -115,9 +142,32 @@ const Navbar = ({ scrollToSection, refs }) => {
           <p onClick={() => handleScroll(contactRef)} className="border-b border-gray-800 pb-2 cursor-pointer">
             Contact
           </p>
+         <div className="border-t border-gray-800 pt-3 mt-1 mb-2">
+            {user ? (
+               <div className="flex justify-between items-center px-1">
+                  <span className="text-accent font-bold text-sm truncate max-w-[120px]">{user.name}</span>
+                  <div className="flex gap-4">
+                      <a href="/dashboard" className="text-white text-sm hover:underline">Dashboard</a>
+                      <button onClick={logout} className="text-red-400 text-sm hover:underline">Logout</button>
+                  </div>
+               </div>
+            ) : (
+               <a href="/login" className="block text-center text-white hover:text-accent py-2 font-semibold border-b border-gray-800 mb-2">
+                  Login
+               </a>
+            )}
+         </div>
 
          <div className="overflow-hidden flex justify-center pt-2">
-            <button onClick={() => handleScroll(bookingRef)} className="bg-accent text-black py-3 px-3 rounded-lg font-semibold hover:opacity-90">
+            <button onClick={() => {
+              const section = document.getElementById('booking');
+              if (section) {
+                  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              } else {
+                  window.location.href = '/#booking';
+              }
+              setOpen(false);
+            }} className="bg-accent text-black py-3 px-3 rounded-lg font-semibold hover:opacity-90 w-full mb-2">
             Book Now
           </button>
           </div>

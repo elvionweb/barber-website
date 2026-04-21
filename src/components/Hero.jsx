@@ -59,7 +59,14 @@ const Hero = ({ scrollToSection, bookingRef, servicesRef }) => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button onClick={() => scrollToSection && scrollToSection(bookingRef)} className="bg-accent text-black px-6 py-3 sm:px-8 sm:py-3 rounded-md font-semibold hover:opacity-90 transition">
+          <button onClick={() => {
+            const section = document.getElementById('booking');
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                window.location.href = '/#booking';
+            }
+          }} className="bg-accent text-black px-6 py-3 sm:px-8 sm:py-3 rounded-md font-semibold hover:opacity-90 transition">
             Book Appointment
           </button>
 

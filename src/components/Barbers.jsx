@@ -95,9 +95,16 @@ const Barbers = ({ barbersRef }) => {
 
                 <div className="mt-auto pt-4">
                   <button
-                    onClick={() =>
-                      (window.location.href = `/?reschedule=false&barber=${encodeURIComponent(barber.name)}#booking`)
-                    }
+                    onClick={(e) => {
+                       e.preventDefault();
+                       window.history.pushState({}, '', `/?reschedule=false&barber=${encodeURIComponent(barber.name)}#booking`);
+                       const section = document.getElementById('booking');
+                       if (section) {
+                           section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                       } else {
+                           window.location.href = `/?reschedule=false&barber=${encodeURIComponent(barber.name)}#booking`;
+                       }
+                    }}
                     className="w-full bg-gray-800 hover:bg-accent hover:text-[#111111] transition-colors py-3 rounded-lg font-bold"
                   >
                     Book with {barber.name.split(" ")[0]}
