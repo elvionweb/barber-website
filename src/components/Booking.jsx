@@ -117,21 +117,21 @@ const Booking = () => {
         setSubmitting(true);
         setErrorMsg('');
         try {
+                const config = user ? { headers: { Authorization: `Bearer ${user.token}` } } : {};
             if (waitlistMode) {
                 await axios.post('/api/appointments/waitlist', {
                     name: clientName, phone, email, date: selectedDate, service: selectedService._id
-                });
+                }, config);
                 setReference('WAITLIST-' + Math.floor(Math.random() * 10000));
             } else if (isReschedule) {
-                const config = user ? { headers: { Authorization: `Bearer ${user.token}` } } : {};
                 const { data } = await axios.put(`/api/appointments/${rescheduleAptId}/reschedule`, {
                     newDate: selectedDate, newTimeSlot: selectedTimeSlot
                 }, config);
                 setReference(data._id.substring(data._id.length - 8).toUpperCase());
             } else {
                 const { data } = await axios.post('/api/appointments', {
-                    clientName, phone, email, service: selectedService._id, barber: selectedBarber.name, date: selectedDate, timeSlot: selectedTimeSlot
-                });
+                    clientName, phone, email, service: selectedService._id, barber: selectedBarber.name, date: selectedDate, timeSlot: selectedTimeSlot, giftCode
+                }, config);
                 setReference(data._id.substring(data._id.length - 8).toUpperCase());
             }
             setStep(4);

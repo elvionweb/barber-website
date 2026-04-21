@@ -50,7 +50,7 @@ const Home = () => {
       }} />
 
     <section ref={homeRef}>
-        <Hero />
+        <Hero scrollToSection={scrollToSection} bookingRef={bookingRef} servicesRef={servicesRef} />
       </section>
 
     <section ref={aboutRef}>

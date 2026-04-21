@@ -12,7 +12,7 @@ const images = [
   "/Mc7.jpeg",
 ];
 
-const Hero = () => {
+const Hero = ({ scrollToSection, bookingRef, servicesRef }) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -59,11 +59,11 @@ const Hero = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="bg-accent text-black px-6 py-3 sm:px-8 sm:py-3 rounded-md font-semibold hover:opacity-90 transition">
+          <button onClick={() => scrollToSection && scrollToSection(bookingRef)} className="bg-accent text-black px-6 py-3 sm:px-8 sm:py-3 rounded-md font-semibold hover:opacity-90 transition">
             Book Appointment
           </button>
 
-          <button className="border border-accent px-6 py-3 sm:px-8 sm:py-3 rounded-md hover:bg-accent hover:text-black transition">
+          <button onClick={() => scrollToSection && scrollToSection(servicesRef)} className="border border-accent px-6 py-3 sm:px-8 sm:py-3 rounded-md hover:bg-accent hover:text-black transition">
             View Services
           </button>
         </div>
